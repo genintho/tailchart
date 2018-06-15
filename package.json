@@ -7,7 +7,9 @@
   "author": "Thomas Genin <xt6.thomas.genin@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "chalk": "^2.4.1",
+    "blessed": "^0.1.81",
+    "blessed-contrib": "^4.8.5",
+    "rxjs": "^6.2.1",
     "tail": "^1.2.3"
   },
   "devDependencies": {

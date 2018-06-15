@@ -2,7 +2,7 @@
   "version": "1.0",
   "source": "/tmp/words.log",
   "screens": [{
-    "name": "raw",
-    "type": "raw"
+    "name": "hbar",
+    "match": "(e|a|b|x)"
   }]
 }
