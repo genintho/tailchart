@@ -7,6 +7,7 @@ const contrib = require("blessed-contrib");
 const RawLogWidget = require("./widgets/RawLog");
 const FilterLogWidget = require("./widgets/FilterLog");
 const SplitCounterWidget = require("./widgets/SplitCounter");
+const LastValueWidget = require("./widgets/LastValue");
 
 const colNb = config.screens.reduce((accumulator, current) => {
   if (!accumulator) {
@@ -35,6 +36,9 @@ const widgets = config.screens.map((screenConfig, index) => {
       break;
     case "splitCounter":
       return new SplitCounterWidget(grid, screenConfig);
+      break;
+    case "lastValue":
+      return new LastValueWidget(grid, screenConfig);
       break;
     default:
       console.error("Unknow widget type", screenConfig.type, "at index", index);

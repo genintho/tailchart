@@ -9,7 +9,17 @@
       "col": 0,
       "colspan": 3,
       "row": 0,
-      "rowspan": 2
+      "rowspan": 3
+    },
+    {
+      "type": "lastValue",
+      "name": "Api Timing",
+      "match": "200 (?:GET|POST) (/[\\w/]+) \\(\\<IP REDACTED\\>\\) (.+)ms",
+      "preTrim": 29,
+      "col": 3,
+      "colspan": 1,
+      "row": 0,
+      "rowspan": 1
     },
     {
       "type": "filteredLog",
@@ -18,7 +28,7 @@
       "preTrim": 29,
       "col": 3,
       "colspan": 1,
-      "row": 0,
+      "row": 1,
       "rowspan": 1
     },
     {
@@ -27,7 +37,7 @@
       "match": "SELECT orm_([a-z]+)",
       "col": 3,
       "colspan": 1,
-      "row": 1,
+      "row": 2,
       "rowspan": 1
     }
   ]

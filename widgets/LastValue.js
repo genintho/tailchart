@@ -1,7 +1,6 @@
 const contrib = require("blessed-contrib");
-const MAX_WIDTH = 30;
 
-module.exports = class SplitCounter {
+module.exports = class AvgCounter {
   constructor(grid, config) {
     this.table = grid.set(
       config.row,
@@ -20,11 +19,11 @@ module.exports = class SplitCounter {
         height: "100%",
         border: { type: "line", fg: "cyan" },
         columnSpacing: 5,
-        columnWidth: [MAX_WIDTH, 5, 4]
+        columnWidth: [40, 10]
       }
     );
     this.regExp = new RegExp(config.match, "g");
-    this.tableMatch = {};
+    this.tableMatch = new Map();
   }
 
   newLine(line) {
@@ -34,34 +33,23 @@ module.exports = class SplitCounter {
     if (!ret) {
       return;
     }
-    const token = ret[1];
-    if (!tableMatch[token]) {
-      tableMatch[token] = 0;
-    }
-    tableMatch[token]++;
+    this.tableMatch.set(ret[1], [ret[2]]);
+
     this.updateTable();
   }
   updateTable() {
     const tableMatch = this.tableMatch;
-    let total = 0;
-    Object.keys(tableMatch).forEach(key => {
-      total += tableMatch[key];
-    });
-    const keys = Object.keys(tableMatch);
+    const keys = Array.from(tableMatch.keys());
     keys.sort();
     this.table.setData({
-      headers: ["What", "count", "%"],
+      headers: ["What", "Value"],
       data: keys.map(key => {
-        return [
-          key.substr(0, MAX_WIDTH),
-          tableMatch[key],
-          Math.floor((tableMatch[key] / total) * 100)
-        ];
+        return [key, tableMatch.get(key)];
       })
     });
   }
   reset() {
-    this.tableMatch = {};
+    this.tableMatch = new Map();
     this.updateTable();
   }
 };
