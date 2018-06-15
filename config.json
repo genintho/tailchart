@@ -1,8 +1,34 @@
 {
   "version": "1.0",
-  "source": "/tmp/words.log",
-  "screens": [{
-    "name": "hbar",
-    "match": "(e|a|b|x)"
-  }]
+  "source": "/tmp/dev.log",
+  "screens": [
+    {
+      "type": "raw",
+      "name": "Raw Logs",
+      "preTrim": 18,
+      "col": 0,
+      "colspan": 3,
+      "row": 0,
+      "rowspan": 2
+    },
+    {
+      "type": "filteredLog",
+      "name": "Raw Select queries",
+      "match": "SELECT orm_",
+      "preTrim": 29,
+      "col": 3,
+      "colspan": 1,
+      "row": 0,
+      "rowspan": 1
+    },
+    {
+      "type": "splitCounter",
+      "name": "Select queries",
+      "match": "SELECT orm_([a-z]+)",
+      "col": 3,
+      "colspan": 1,
+      "row": 1,
+      "rowspan": 1
+    }
+  ]
 }
