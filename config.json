@@ -5,7 +5,7 @@
     {
       "type": "raw",
       "name": "Raw Logs",
-      "preTrim": 18,
+      "prefixTrimIndex": 18,
       "col": 0,
       "colspan": 3,
       "row": 0,

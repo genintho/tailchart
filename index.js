@@ -41,15 +41,15 @@ const widgets = config.screens.map((screenConfig, index) => {
       return new LastValueWidget(grid, screenConfig);
       break;
     default:
-      console.error("Unknow widget type", screenConfig.type, "at index", index);
+      throw new Error(
+        `Unknown widget type ${screenConfig.type} at index ${index}`
+      );
       break;
   }
 });
 
 const tail = new TailLib(config.source);
 
-const regExp = new RegExp(config.screens[0].match, "g");
-let tableMatch = {};
 tail.on("line", function(data) {
   widgets.forEach(widget => {
     widget.newLine(data);

@@ -1,6 +1,20 @@
+const _ = require("lodash");
+const ConfigChecks = require("../utils/configChecks");
 const contrib = require("blessed-contrib");
 
 module.exports = class RawLog {
+  static sanitizeConfig(config) {
+    const cleanConfig = {
+      name: config.name,
+      row: config.row,
+      col: config.col,
+      rowspan: config.rowspan,
+      colspan: config.colspan,
+      prefixTrimIndex: ConfigChecks.sanitizeNumber(config, "prefixTrimIndex", 0)
+    };
+
+    return cleanConfig;
+  }
   constructor(grid, config) {
     this.rollingLog = grid.set(
       config.row,
@@ -16,11 +30,12 @@ module.exports = class RawLog {
         label: config.name
       }
     );
-    this.offset = config.preTrim ? parseInt(config.preTrim, 10) : 0;
+    this.prefixTrimIndex = config.prefixTrimIndex;
   }
 
   newLine(line) {
-    this.rollingLog.log(line.substr(this.offset));
+    line = line.substr(this.prefixTrimIndex);
+    this.rollingLog.log(line);
   }
   reset() {
     // no-op
