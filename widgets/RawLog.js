@@ -1,4 +1,3 @@
-const _ = require("lodash");
 const ConfigChecks = require("../utils/configChecks");
 const contrib = require("blessed-contrib");
 
@@ -10,7 +9,11 @@ class RawLog {
       col: config.col,
       rowspan: config.rowspan,
       colspan: config.colspan,
-      prefixTrimIndex: ConfigChecks.sanitizeNumber(config, "prefixTrimIndex", 0)
+      prefixTrimIndex: ConfigChecks.sanitizeInteger(
+        config,
+        "prefixTrimIndex",
+        0
+      )
     };
 
     return cleanConfig;

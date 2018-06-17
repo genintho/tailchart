@@ -1,7 +1,7 @@
 const _ = require("lodash");
 
 module.exports = {
-  sanitizeNumber: (config, key, defaultValue) => {
+  sanitizeInteger: (config, key, defaultValue) => {
     // When default is undefined, it means the value must be define
     if (!config.hasOwnProperty(key)) {
       if (_.isUndefined(defaultValue)) {
@@ -20,5 +20,23 @@ module.exports = {
       );
     }
     return config[key];
+  },
+  sanitizeRegExp: (config, key) => {
+    if (!config.hasOwnProperty(key)) {
+      throw new Error(
+        `Widget '${config.name}' is missing required attribute '${key}'`
+      );
+    }
+    try {
+      return new RegExp(config[key], "g");
+    } catch (e) {
+      throw new Error(
+        `Widget '${
+          config.name
+        }' attribute '${key}' must be a valid regular expression. Got Error ${
+          e.message
+        }`
+      );
+    }
   }
 };
