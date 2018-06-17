@@ -14,6 +14,12 @@ fs.readdirSync("./widgets").forEach(fileName => {
     console.warn(`Widget definition in ${fileName} need to define CONFIG_TYPE`);
     return;
   }
+  if (!module.hasOwnProperty("sanitizeConfig")) {
+    console.warn(
+      `Widget definition in ${fileName} need to define sanitizeConfig`
+    );
+    return;
+  }
   configTypeConstructor.set(module.CONFIG_TYPE, module);
 });
 

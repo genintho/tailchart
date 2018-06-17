@@ -1,6 +1,9 @@
 const contrib = require("blessed-contrib");
 
-module.exports = class AvgCounter {
+class LastValue {
+  static sanitizeConfig(config) {
+    return config;
+  }
   constructor(grid, config) {
     this.table = grid.set(
       config.row,
@@ -52,4 +55,7 @@ module.exports = class AvgCounter {
     this.tableMatch = new Map();
     this.updateTable();
   }
-};
+}
+
+LastValue.CONFIG_TYPE = "lastValue";
+module.exports = LastValue;

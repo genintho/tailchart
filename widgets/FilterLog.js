@@ -1,7 +1,10 @@
 const contrib = require("blessed-contrib");
 const RawLogWidget = require("./RawLog");
 
-module.exports = class FilterLog extends RawLogWidget {
+class FilterLog extends RawLogWidget {
+  static sanitizeConfig(config) {
+    return config;
+  }
   constructor(grid, config) {
     super(grid, config);
     this.regExp = new RegExp(config.match, "g");
@@ -15,4 +18,7 @@ module.exports = class FilterLog extends RawLogWidget {
   reset() {
     // no-op
   }
-};
+}
+
+FilterLog.CONFIG_TYPE = "filteredLog";
+module.exports = FilterLog;
