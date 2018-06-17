@@ -1,4 +1,5 @@
 const config = require("./config.json");
+const _ = require("lodash");
 const TailLib = require("tail").Tail;
 
 const blessed = require("blessed");
@@ -23,10 +24,43 @@ const rowNb = config.screens.reduce((accumulator, current) => {
   return Math.max(accumulator, current.row + 1);
 });
 
-const screen = blessed.screen();
+const screen = blessed.screen({
+  smartCSR: true,
+  autoPadding: true
+});
 const grid = new contrib.grid({ rows: rowNb, cols: colNb, screen: screen });
 
+const widgetNames = new Set();
 const widgets = config.screens.map((screenConfig, index) => {
+  if (!_.isString(screenConfig.name)) {
+    throw new Error(
+      `Screen ${index + 1} is missing the required attribute 'name'`
+    );
+  }
+  if (widgetNames.has(screenConfig.name)) {
+    throw new Error(`Multiple screen with name ${screenConfig.name}`);
+  }
+  widgetNames.add(screenConfig.name);
+  if (!_.isNumber(screenConfig.row)) {
+    throw new Error(
+      `Screen ${screenConfig.name} is missing the required attribute 'row'.`
+    );
+  }
+  if (!_.isNumber(screenConfig.col)) {
+    throw new Error(
+      `Screen ${screenConfig.name} is missing the required attribute 'col'.`
+    );
+  }
+  if (!_.isNumber(screenConfig.rowspan)) {
+    throw new Error(
+      `Screen ${screenConfig.name} is missing the required attribute 'rowspan'.`
+    );
+  }
+  if (!_.isNumber(screenConfig.colspan)) {
+    throw new Error(
+      `Screen ${screenConfig.name} is missing the required attribute 'colspan'.`
+    );
+  }
   switch (screenConfig.type) {
     case "raw":
       return new RawLogWidget(grid, screenConfig);
