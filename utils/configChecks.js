@@ -3,7 +3,7 @@ const _ = require("lodash");
 module.exports = {
   sanitizeNumber: (config, key, defaultValue) => {
     // When default is undefined, it means the value must be define
-    if (!config.hasOwnProperty("key")) {
+    if (!config.hasOwnProperty(key)) {
       if (_.isUndefined(defaultValue)) {
         throw new Error(
           `Widget '${

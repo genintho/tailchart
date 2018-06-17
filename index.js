@@ -63,17 +63,22 @@ const widgets = config.screens.map((screenConfig, index) => {
   }
   switch (screenConfig.type) {
     case "raw":
-      return new RawLogWidget(grid, screenConfig);
+      const cleanScreenConfig = RawLogWidget.sanitizeConfig(screenConfig);
+      return new RawLogWidget(grid, cleanScreenConfig);
       break;
+
     case "filteredLog":
       return new FilterLogWidget(grid, screenConfig);
       break;
+
     case "splitCounter":
       return new SplitCounterWidget(grid, screenConfig);
       break;
+
     case "lastValue":
       return new LastValueWidget(grid, screenConfig);
       break;
+
     default:
       throw new Error(
         `Unknown widget type ${screenConfig.type} at index ${index}`
