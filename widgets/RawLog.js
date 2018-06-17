@@ -3,20 +3,13 @@ const contrib = require("blessed-contrib");
 
 class RawLog {
   static sanitizeConfig(config) {
-    const cleanConfig = {
-      name: config.name,
-      row: config.row,
-      col: config.col,
-      rowspan: config.rowspan,
-      colspan: config.colspan,
+    return Object.assign(ConfigChecks.global(config), {
       prefixTrimIndex: ConfigChecks.sanitizeInteger(
         config,
         "prefixTrimIndex",
         0
       )
-    };
-
-    return cleanConfig;
+    });
   }
   constructor(grid, config) {
     this.rollingLog = grid.set(

@@ -3,9 +3,9 @@ const RawLogWidget = require("./RawLog");
 
 class FilterLog extends RawLogWidget {
   static sanitizeConfig(config) {
-    const cleanConfig = super.sanitizeConfig(config);
-    cleanConfig.matcher = ConfigChecks.sanitizeRegExp(config, "match");
-    return cleanConfig;
+    return Object.assign(ConfigChecks.global(config), {
+      matcher: ConfigChecks.sanitizeRegExp(config, "match")
+    });
   }
   constructor(grid, config) {
     super(grid, config);

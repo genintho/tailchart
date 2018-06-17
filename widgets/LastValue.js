@@ -1,8 +1,11 @@
 const contrib = require("blessed-contrib");
+const ConfigChecks = require("../utils/configChecks");
 
 class LastValue {
   static sanitizeConfig(config) {
-    return config;
+    return Object.assign(ConfigChecks.global(config), {
+      matcher: ConfigChecks.sanitizeRegExp(config, "match")
+    });
   }
   constructor(grid, config) {
     this.table = grid.set(
@@ -25,13 +28,12 @@ class LastValue {
         columnWidth: [40, 10]
       }
     );
-    this.regExp = new RegExp(config.match, "g");
+    this.matcher = config.matcher;
     this.tableMatch = new Map();
   }
 
   newLine(line) {
-    const tableMatch = this.tableMatch;
-    const ret = this.regExp.exec(line);
+    const ret = this.matcher.exec(line);
 
     if (!ret) {
       return;
