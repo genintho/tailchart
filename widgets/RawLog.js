@@ -2,7 +2,7 @@ const _ = require("lodash");
 const ConfigChecks = require("../utils/configChecks");
 const contrib = require("blessed-contrib");
 
-module.exports = class RawLog {
+class RawLog {
   static sanitizeConfig(config) {
     const cleanConfig = {
       name: config.name,
@@ -40,4 +40,7 @@ module.exports = class RawLog {
   reset() {
     // no-op
   }
-};
+}
+
+RawLog.CONFIG_TYPE = "raw";
+module.exports = RawLog;

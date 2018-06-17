@@ -8,7 +8,7 @@ module.exports = {
         throw new Error(
           `Widget '${
             config.name
-          }' is missing require integer attribute '${key}'`
+          }' is missing required integer attribute '${key}'`
         );
       } else {
         return defaultValue;

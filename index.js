@@ -1,14 +1,21 @@
 const config = require("./config.json");
 const _ = require("lodash");
+const fs = require("fs");
 const TailLib = require("tail").Tail;
 
 const blessed = require("blessed");
 const contrib = require("blessed-contrib");
 
-const RawLogWidget = require("./widgets/RawLog");
-const FilterLogWidget = require("./widgets/FilterLog");
-const SplitCounterWidget = require("./widgets/SplitCounter");
-const LastValueWidget = require("./widgets/LastValue");
+const configTypeConstructor = new Map();
+
+fs.readdirSync("./widgets").forEach(fileName => {
+  const module = require("./widgets/" + fileName);
+  if (!module.hasOwnProperty("CONFIG_TYPE")) {
+    console.warn(`Widget definition in ${fileName} need to define CONFIG_TYPE`);
+    return;
+  }
+  configTypeConstructor.set(module.CONFIG_TYPE, module);
+});
 
 const colNb = config.screens.reduce((accumulator, current) => {
   if (!accumulator) {
@@ -61,30 +68,15 @@ const widgets = config.screens.map((screenConfig, index) => {
       `Screen ${screenConfig.name} is missing the required attribute 'colspan'.`
     );
   }
-  switch (screenConfig.type) {
-    case "raw":
-      const cleanScreenConfig = RawLogWidget.sanitizeConfig(screenConfig);
-      return new RawLogWidget(grid, cleanScreenConfig);
-      break;
 
-    case "filteredLog":
-      return new FilterLogWidget(grid, screenConfig);
-      break;
-
-    case "splitCounter":
-      return new SplitCounterWidget(grid, screenConfig);
-      break;
-
-    case "lastValue":
-      return new LastValueWidget(grid, screenConfig);
-      break;
-
-    default:
-      throw new Error(
-        `Unknown widget type ${screenConfig.type} at index ${index}`
-      );
-      break;
+  if (!configTypeConstructor.has(screenConfig.type)) {
+    throw new Error(
+      `Unknown widget type ${screenConfig.type} at index ${index}`
+    );
   }
+  const cls = configTypeConstructor.get(screenConfig.type);
+  const cleanConfig = cls.sanitizeConfig(screenConfig);
+  return new cls(grid, cleanConfig);
 });
 
 const tail = new TailLib(config.source);
