@@ -1,6 +1,9 @@
-const config = require("./config.json");
-const _ = require("lodash");
 const fs = require("fs");
+const stripJsonComments = require("strip-json-comments");
+const config = JSON.parse(
+  stripJsonComments(fs.readFileSync("./config.json", { encoding: "utf-8" }))
+);
+const _ = require("lodash");
 const TailLib = require("tail").Tail;
 
 const blessed = require("blessed");
