@@ -3,7 +3,7 @@ const RawLogWidget = require("./RawLog");
 
 class FilterLog extends RawLogWidget {
   static sanitizeConfig(config) {
-    return Object.assign(ConfigChecks.global(config), {
+    return Object.assign(RawLogWidget.sanitizeConfig(config), {
       matcher: ConfigChecks.sanitizeRegExp(config, "match")
     });
   }
