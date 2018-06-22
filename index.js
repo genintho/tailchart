@@ -1,7 +1,18 @@
+#!/usr/bin/env node
+const program = require("commander");
+
+program
+  .option(
+    "-c, --config [path]",
+    "Path to the config file to use",
+    "./config.json"
+  )
+  .parse(process.argv);
+
 const fs = require("fs");
 const stripJsonComments = require("strip-json-comments");
 const config = JSON.parse(
-  stripJsonComments(fs.readFileSync("./config.json", { encoding: "utf-8" }))
+  stripJsonComments(fs.readFileSync(program.config, { encoding: "utf-8" }))
 );
 const _ = require("lodash");
 const TailLib = require("tail").Tail;
