@@ -4,7 +4,6 @@ const blessed = require("blessed");
 const contrib = require("blessed-contrib");
 const fs = require("fs");
 const program = require("commander");
-const readline = require("readline");
 const stripJsonComments = require("strip-json-comments");
 const TailLib = require("tail").Tail;
 
@@ -89,11 +88,15 @@ const widgets = config.screens.map((screenConfig, index) => {
 
 const tail = new TailLib(config.source);
 
-tail.on("line", function(data) {
+tail.on("line", function(line) {
   widgets.forEach(widget => {
-    widget.newLine(data);
+    line = line.trim();
+    if (line.length) {
+      widget.newLine(line);
+    }
   });
 });
+
 tail.on("error", function(error) {
   console.log("ERROR: ", error);
 });
