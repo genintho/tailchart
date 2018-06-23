@@ -1,5 +1,12 @@
 #!/usr/bin/env node
+const _ = require("lodash");
+const blessed = require("blessed");
+const contrib = require("blessed-contrib");
+const fs = require("fs");
 const program = require("commander");
+const readline = require("readline");
+const stripJsonComments = require("strip-json-comments");
+const TailLib = require("tail").Tail;
 
 program
   .option(
@@ -9,17 +16,18 @@ program
   )
   .parse(process.argv);
 
-const fs = require("fs");
-const stripJsonComments = require("strip-json-comments");
-const config = JSON.parse(
-  stripJsonComments(fs.readFileSync(program.config, { encoding: "utf-8" }))
-);
-const _ = require("lodash");
-const TailLib = require("tail").Tail;
-
-const blessed = require("blessed");
-const contrib = require("blessed-contrib");
-
+if (!fs.existsSync(program.config)) {
+  throw new Error(`File ${program.config} can not be found`);
+}
+let config = {};
+try {
+  config = JSON.parse(
+    stripJsonComments(fs.readFileSync(program.config, { encoding: "utf-8" }))
+  );
+} catch (e) {
+  console.error(e);
+  process.exit(1);
+}
 const configTypeConstructor = new Map();
 
 fs.readdirSync("./widgets").forEach(fileName => {
