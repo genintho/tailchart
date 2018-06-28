@@ -12,13 +12,12 @@
     "blessed-contrib": "^4.8.5",
     "commander": "^2.15.1",
     "lodash": "^4.17.10",
-    "rxjs": "^6.2.1",
     "strip-json-comments": "^2.0.1",
-    "tail": "^1.2.3"
+    "tail": "1.2.4"
   },
   "devDependencies": {
-    "jest": "^23.1.0",
-    "prettier": "^1.13.5",
-    "random-words": "^1.1.0"
+    "jest": "23.2.0",
+    "prettier": "1.13.6",
+    "random-words": "1.1.0"
   }
 }
