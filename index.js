@@ -94,11 +94,12 @@ const widgets = config.screens.map((screenConfig, index) => {
 const tail = new TailLib(config.source);
 
 tail.on("line", function(line) {
+  line = line.trim();
+  if (!line.length) {
+    return;
+  }
   widgets.forEach(widget => {
-    line = line.trim();
-    if (line.length) {
-      widget.newLine(line);
-    }
+    widget.newLine(line);
   });
 });
 
