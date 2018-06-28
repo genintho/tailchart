@@ -1,2 +1,5 @@
 # tailchart
-Create charts from tail
+
+## Install
+
+`npm install -g tailchart`
