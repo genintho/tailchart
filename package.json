@@ -2,7 +2,13 @@
   "name": "tailchart",
   "version": "1.0.1",
   "description": "Create charts from tail",
-  "bin": "./index.js",
+  "keywords": [
+    "log",
+    "tail"
+  ],
+  "bin": {
+    "tailchart": "./index.js"
+  },
   "main": "./index.js",
   "repository": "https://github.com/genintho/tailchart.git",
   "author": "Thomas Genin <xt6.thomas.genin@gmail.com>",
