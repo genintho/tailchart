@@ -30,7 +30,12 @@ try {
 const configTypeConstructor = new Map();
 
 fs.readdirSync("./widgets").forEach(fileName => {
-  const module = require("./widgets/" + fileName);
+  const modulePath = "./widgets/" + fileName;
+  if (fs.lstatSync(modulePath).isDirectory()) {
+    return;
+  }
+  const module = require(modulePath);
+
   if (!module.hasOwnProperty("CONFIG_TYPE")) {
     console.warn(`Widget definition in ${fileName} need to define CONFIG_TYPE`);
     return;
