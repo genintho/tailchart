@@ -98,34 +98,38 @@ describe("RawLog", () => {
     });
   });
 
-  it("sets the clean config on the object", () => {
-    const widget = new RawLog({ set: jest.fn() }, config);
-    expect(widget.config.name).toBe(config.name);
+  describe("constructor", function() {
+    it("sets the clean config on the object", () => {
+      const widget = new RawLog({ set: jest.fn() }, config);
+      expect(widget.config.name).toBe(config.name);
+    });
   });
 
-  test("send to the log widget a simple log line", () => {
-    const widget = new RawLog({ set: jest.fn() }, config);
-    widget.rollingLog = { log: jest.fn() };
-    widget.newLine("a");
-    expect(widget.rollingLog.log).toHaveBeenCalledWith("a");
-  });
+  describe("newLine", () => {
+    test("send to the log widget a simple log line", () => {
+      const widget = new RawLog({ set: jest.fn() }, config);
+      widget.rollingLog = { log: jest.fn() };
+      widget.newLine("a");
+      expect(widget.rollingLog.log).toHaveBeenCalledWith("a");
+    });
 
-  it("applies color tag when line match an line highlight", () => {
-    const widget = new RawLog({ set: jest.fn() }, config);
-    widget.rollingLog = { log: jest.fn() };
-    widget.newLine("Something warning something");
-    expect(widget.rollingLog.log).toHaveBeenCalledWith(
-      "{yellow-fg}Something warning something{/yellow-fg}"
-    );
-  });
+    it("applies color tag when line match an line highlight", () => {
+      const widget = new RawLog({ set: jest.fn() }, config);
+      widget.rollingLog = { log: jest.fn() };
+      widget.newLine("Something warning something");
+      expect(widget.rollingLog.log).toHaveBeenCalledWith(
+        "{yellow-fg}Something warning something{/yellow-fg}"
+      );
+    });
 
-  it("applies color tag when line match an line highlight", () => {
-    const widget = new RawLog(
-      { set: jest.fn() },
-      Object.assign({}, config, { prefixTrimIndex: 1 })
-    );
-    widget.rollingLog = { log: jest.fn() };
-    widget.newLine("ab");
-    expect(widget.rollingLog.log).toHaveBeenCalledWith("b");
+    it("applies color tag when line match an line highlight", () => {
+      const widget = new RawLog(
+        { set: jest.fn() },
+        Object.assign({}, config, { prefixTrimIndex: 1 })
+      );
+      widget.rollingLog = { log: jest.fn() };
+      widget.newLine("ab");
+      expect(widget.rollingLog.log).toHaveBeenCalledWith("b");
+    });
   });
 });
