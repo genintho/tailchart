@@ -84,8 +84,10 @@ class RawLog {
       const color = foundLineMatch.color;
       line = `{${color}-fg}${line}{/${color}-fg}`;
     }
+
     this.rollingLog.log(line);
   }
+
   reset() {
     // no-op
   }
