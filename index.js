@@ -54,14 +54,14 @@ const colNb = config.screens.reduce((accumulator, current) => {
     accumulator = 0;
   }
   return Math.max(accumulator, current.col + 1);
-});
+}, 0);
 
 const rowNb = config.screens.reduce((accumulator, current) => {
   if (!accumulator) {
     accumulator = 0;
   }
   return Math.max(accumulator, current.row + 1);
-});
+}, 0);
 
 const screen = blessed.screen({
   smartCSR: true,
