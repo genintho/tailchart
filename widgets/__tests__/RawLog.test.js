@@ -1,6 +1,6 @@
 const RawLog = require("../RawLog");
 const config = RawLog.sanitizeConfig({
-  type: "raw",
+  type: RawLog.CONFIG_TYPE,
   name: "Raw Logs",
   prefixTrimIndex: 0,
   col: 0,
@@ -64,6 +64,21 @@ describe("RawLog", () => {
             }
           });
         }).toThrow("color must be a string");
+      });
+
+      it("throws if lines is not an array", () => {
+        expect(() => {
+          RawLog.sanitizeConfig({
+            name: "Raw Logs",
+            col: 0,
+            colspan: 1,
+            row: 0,
+            rowspan: 1,
+            highlights: {
+              lines: {}
+            }
+          });
+        }).toThrow("lines must be an array");
       });
 
       it("throws if match is not set", () => {
