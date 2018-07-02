@@ -22,5 +22,5 @@ class FilterLog extends RawLogWidget {
   }
 }
 
-FilterLog.CONFIG_TYPE = "filteredLog";
+FilterLog.CONFIG_TYPE = "filter";
 module.exports = FilterLog;

@@ -1,44 +1,70 @@
 {
+  // Required, only one value for now
+
   "version": "1.0",
-  "source": "/tmp/dev.log",
-  "screens": [
+
+  // Required. Path to the fail we will tail
+  "source": "/var/log/system.log",
+
+  // Required. Must be an array of objects
+  "widgets": [
+    // Raw Log widgets
+    // Display all log lines
     {
-      "type": "raw",
-      "name": "Raw Logs",
-      "prefixTrimIndex": 18,
-      "col": 0,
-      "colspan": 3,
-      "row": 0,
-      "rowspan": 3
+      "type": "raw", // required
+      "name": "Raw Logs", // Required, must unique accross all widgets
+      "col": 0, // required, integer
+      "colspan": 3, // required, integer
+      "row": 0, // required, integer
+      "rowspan": 3, // required, integer
+      "prefixTrimIndex": 0, // optional, integer. Remove the N first character of the line
+      "highlights": {
+        // optional, objecct
+        "lines": [
+          {
+            "color": "red",
+            "match": "error"
+          },
+          {
+            "color": "yellow",
+            "match": "warning"
+          }
+        ]
+      }
     },
     {
-      "type": "lastValue",
-      "name": "Api Timing",
-      "match": "200 (?:GET|POST) (/[\\w/]+) \\(\\<IP REDACTED\\>\\) (.+)ms",
-      "preTrim": 29,
+      "type": "filter", // required
+      "name": "Errors and Warnings", // Required, must unique accross all widgets
+      "col": 0, // required, integer
+      "colspan": 3, // required, integer
+      "row": 3, // required, integer
+      "rowspan": 1, // required, integer
+
+      "match": "error|warning",
+
+      "prefixTrimIndex": 0, // optional, integer. Remove the N first character of the line
+      "highlights": {
+        // optional, objecct
+        "lines": [
+          {
+            "color": "red",
+            "match": "error"
+          },
+          {
+            "color": "yellow",
+            "match": "warning"
+          }
+        ]
+      }
+    },
+    {
+      "type": "counter",
+      "name": "Sonos App Error type",
+      "match": "<Error> ([a-z]+)",
       "col": 3,
       "colspan": 1,
       "row": 0,
-      "rowspan": 1
-    },
-    {
-      "type": "filteredLog",
-      "name": "Raw Select queries",
-      "match": "SELECT orm_",
-      "preTrim": 29,
-      "col": 3,
-      "colspan": 1,
-      "row": 1,
-      "rowspan": 1
-    },
-    {
-      "type": "splitCounter",
-      "name": "Select queries",
-      "match": "SELECT orm_([a-z]+)",
-      "col": 3,
-      "colspan": 1,
-      "row": 2,
-      "rowspan": 1
+      "rowspan": 2
     }
   ]
 }

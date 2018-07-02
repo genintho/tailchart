@@ -1,10 +1,15 @@
 {
   "name": "tailchart",
   "version": "1.0.1",
-  "description": "Create charts from tail",
+  "description": "A smarter way to follow files and logs",
   "keywords": [
     "log",
-    "tail"
+    "tail",
+    "files",
+    "graph",
+    "visualization",
+    "work smarter",
+    "devXp"
   ],
   "bin": {
     "tailchart": "./index.js"

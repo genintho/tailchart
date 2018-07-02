@@ -8,7 +8,7 @@ const MAX_WIDTH = 30;
  *
  * @type {module.SplitCounter}
  */
-class SplitCounter {
+class Counter {
   static sanitizeConfig(config) {
     return Object.assign(ConfigChecks.global(config), {
       matcher: ConfigChecks.sanitizeRegExp(config, "match")
@@ -78,5 +78,5 @@ class SplitCounter {
   }
 }
 
-SplitCounter.CONFIG_TYPE = "splitCounter";
-module.exports = SplitCounter;
+Counter.CONFIG_TYPE = "counter";
+module.exports = Counter;

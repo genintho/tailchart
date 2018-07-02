@@ -34,7 +34,7 @@ function _sanitizeRegExp(config, key) {
     );
   }
   try {
-    return new RegExp(config[key], "g");
+    return new RegExp(config[key], "gi");
   } catch (e) {
     throw new Error(
       `Widget '${

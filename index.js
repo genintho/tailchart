@@ -49,14 +49,14 @@ fs.readdirSync("./widgets").forEach(fileName => {
   configTypeConstructor.set(module.CONFIG_TYPE, module);
 });
 
-const colNb = config.screens.reduce((accumulator, current) => {
+const colNb = config.widgets.reduce((accumulator, current) => {
   if (!accumulator) {
     accumulator = 0;
   }
   return Math.max(accumulator, current.col + 1);
 }, 0);
 
-const rowNb = config.screens.reduce((accumulator, current) => {
+const rowNb = config.widgets.reduce((accumulator, current) => {
   if (!accumulator) {
     accumulator = 0;
   }
@@ -70,7 +70,7 @@ const screen = blessed.screen({
 const grid = new contrib.grid({ rows: rowNb, cols: colNb, screen: screen });
 
 const uniqueScreenName = new Set();
-const widgets = config.screens.map((screenConfig, index) => {
+const widgets = config.widgets.map((screenConfig, index) => {
   if (!_.isString(screenConfig.name)) {
     throw new Error(
       `Screen ${index + 1} is missing the required attribute 'name'`
