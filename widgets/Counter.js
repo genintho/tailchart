@@ -5,8 +5,6 @@ const MAX_WIDTH = 30;
 /**
  * This widget draw a table how how many time one event has been seen.
  * It use 1 regular expression with 1 capture to identify the element to look for
- *
- * @type {module.SplitCounter}
  */
 class Counter {
   static sanitizeConfig(config) {
@@ -53,6 +51,7 @@ class Counter {
     tableMatch[token]++;
     this.updateTable();
   }
+
   updateTable() {
     const tableMatch = this.tableMatch;
     let total = 0;

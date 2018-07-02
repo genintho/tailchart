@@ -17,6 +17,7 @@ class FilterLog extends RawLogWidget {
       super.newLine(line);
     }
   }
+
   reset() {
     // no-op
   }

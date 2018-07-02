@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 const _ = require("lodash");
 const blessed = require("blessed");
 const contrib = require("blessed-contrib");
@@ -16,8 +17,10 @@ program
   .parse(process.argv);
 
 if (!fs.existsSync(program.config)) {
-  throw new Error(`File ${program.config} can not be found`);
+  console.error(`File ${program.config} can not be found`);
+  process.exit(1);
 }
+
 let config = {};
 try {
   config = JSON.parse(
