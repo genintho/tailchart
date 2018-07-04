@@ -4,6 +4,7 @@ const _ = require("lodash");
 const blessed = require("blessed");
 const contrib = require("blessed-contrib");
 const fs = require("fs");
+const path = require("path");
 const program = require("commander");
 const stripJsonComments = require("strip-json-comments");
 const TailLib = require("tail").Tail;
@@ -32,8 +33,9 @@ try {
 }
 const configTypeConstructor = new Map();
 
-fs.readdirSync("./widgets").forEach(fileName => {
-  const modulePath = "./widgets/" + fileName;
+const widgetFolder = path.resolve(__dirname, "./widgets");
+fs.readdirSync(widgetFolder).forEach(fileName => {
+  const modulePath = path.resolve(widgetFolder, fileName);
   if (fs.lstatSync(modulePath).isDirectory()) {
     return;
   }
