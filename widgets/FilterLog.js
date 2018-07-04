@@ -19,7 +19,7 @@ class FilterLog extends RawLogWidget {
   }
 
   reset() {
-    // no-op
+    super.reset();
   }
 }
 
