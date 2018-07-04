@@ -88,7 +88,8 @@ class RawLog {
   }
 
   reset() {
-    // no-op
+    console.log("reset");
+    this.rollingLog.clearItems();
   }
 }
 
