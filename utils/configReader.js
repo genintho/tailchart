@@ -7,12 +7,7 @@ module.exports = function configReader(configPath) {
     process.exit(1);
   }
 
-  try {
-    return JSON.parse(
-      stripJsonComments(fs.readFileSync(configPath, { encoding: "utf-8" }))
-    );
-  } catch (e) {
-    console.error(e);
-    process.exit(1);
-  }
+  return JSON.parse(
+    stripJsonComments(fs.readFileSync(configPath, { encoding: "utf-8" }))
+  );
 };

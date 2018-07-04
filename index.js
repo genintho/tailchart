@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 
 const blessed = require("blessed");
-const calculateScreensize = require("./utils/calculateScreenSize");
+const calculateScreenSize = require("./utils/calculateScreenSize");
+const ConfigError = require("./exceptions/ConfigError");
+const configChecker = require("./utils/configChecker");
 const configReader = require("./utils/configReader");
 const contrib = require("blessed-contrib");
 const program = require("commander");
@@ -17,14 +19,21 @@ program
   .parse(process.argv);
 
 const config = configReader(program.config);
-
+try {
+  configChecker(config);
+} catch (e) {
+  if (e instanceof ConfigError) {
+    console.error(e.message);
+    process.exit(1);
+  }
+}
 const screen = blessed.screen({
   smartCSR: true,
   autoPadding: true
 });
 
 const grid = new contrib.grid({
-  ...calculateScreensize(config),
+  ...calculateScreenSize(config),
   screen: screen
 });
 

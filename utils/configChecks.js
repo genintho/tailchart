@@ -1,4 +1,5 @@
 const _ = require("lodash");
+const ConfigError = require("../exceptions/ConfigError");
 
 function _global(config) {
   return {
@@ -13,7 +14,7 @@ function _sanitizeInteger(config, key, defaultValue) {
   // When default is undefined, it means the value must be define
   if (!config.hasOwnProperty(key)) {
     if (_.isUndefined(defaultValue)) {
-      throw new Error(
+      throw new ConfigError(
         `Widget '${config.name}' is missing required integer attribute '${key}'`
       );
     } else {
@@ -21,7 +22,7 @@ function _sanitizeInteger(config, key, defaultValue) {
     }
   }
   if (!_.isInteger(config[key])) {
-    throw new Error(
+    throw new ConfigError(
       `Widget '${config.name}' attribute '${key}' must be an integer`
     );
   }
@@ -29,14 +30,14 @@ function _sanitizeInteger(config, key, defaultValue) {
 }
 function _sanitizeRegExp(config, key) {
   if (!config.hasOwnProperty(key)) {
-    throw new Error(
+    throw new ConfigError(
       `Widget '${config.name}' is missing required attribute '${key}'`
     );
   }
   try {
     return new RegExp(config[key], "gi");
   } catch (e) {
-    throw new Error(
+    throw new ConfigError(
       `Widget '${
         config.name
       }' attribute '${key}' must be a valid regular expression. Got Error ${
