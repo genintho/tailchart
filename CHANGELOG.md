@@ -1,6 +1,6 @@
 # Changelog
 
-# Head
+# 1.0.2
 
 - 🐛 Reset functionality is clearing log from RawLog and FilterLog widgets
 - 🐛 Widget were not loading when use in a different directory
